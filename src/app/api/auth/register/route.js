@@ -16,8 +16,13 @@ export async function POST(req) {
       return NextResponse.json({ error: 'User already exists' }, { status: 409 });
     }
 
-    // Assign 'Super Admin' role if it's the first user, otherwise error (needs admin to create others in real app)
-    // For simplicity of this initial setup, we'll create the role if it doesn't exist
+    // Check if any user already exists
+    const anyUserCheck = await query('SELECT id FROM Users LIMIT 1');
+    if (anyUserCheck.rows.length > 0) {
+       return NextResponse.json({ error: 'Initial setup already complete. Only Admins can create new users.' }, { status: 403 });
+    }
+
+    // Since this is the first user, ensure Super Admin role exists
     let roleRes = await query('SELECT id FROM Roles WHERE name = $1', ['Super Admin']);
     let roleId;
 

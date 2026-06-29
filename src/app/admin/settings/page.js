@@ -62,7 +62,7 @@ export default function AdminSettings() {
   return (
     <div className="p-8 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Admin Settings</h1>
-      {message && <div className="mb-4 p-2 bg-blue-100 text-blue-800">{message}</div>}
+      {message && <div className="mb-4 p-2 bg-primary-50 text-primary-800">{message}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="flex items-center space-x-2">
@@ -92,7 +92,7 @@ export default function AdminSettings() {
           <label className="block text-sm font-medium">Company GSTIN</label>
           <input type="text" name="company_gstin" value={settings.company_gstin || ''} onChange={handleChange} className="mt-1 block w-full border rounded p-2" />
         </div>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Save Settings</button>
+        <button type="submit" className="bg-primary-600 text-white px-4 py-2 rounded">Save Settings</button>
       </form>
     </div>
   );

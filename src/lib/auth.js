@@ -17,3 +17,21 @@ export function verifyToken(token) {
     return null;
   }
 }
+
+// Utility to enforce Super Admin role
+// Note: In a production app, we would query the database to confirm the role ID belongs to 'Super Admin'
+// or include the role name in the JWT payload.
+export function requireSuperAdmin(req) {
+  const authHeader = req.headers.get('authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+  const token = authHeader.split(' ')[1];
+  const user = verifyToken(token);
+
+  // Basic check for role_id 1 (Super Admin).
+  if (user && user.role_id === 1) {
+      return user;
+  }
+  return null;
+}

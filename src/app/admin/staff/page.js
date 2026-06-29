@@ -60,7 +60,7 @@ export default function StaffManagement() {
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Staff Management</h1>
 
-      {message && <div className="mb-4 p-2 bg-blue-100 text-blue-800">{message}</div>}
+      {message && <div className="mb-4 p-2 bg-primary-50 text-primary-800">{message}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
@@ -95,7 +95,7 @@ export default function StaffManagement() {
                 ))}
               </select>
             </div>
-            <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded w-full">Add Staff</button>
+            <button type="submit" className="bg-primary-600 text-white px-4 py-2 rounded w-full">Add Staff</button>
           </form>
         </div>
 

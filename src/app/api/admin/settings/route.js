@@ -1,21 +1,11 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { verifyToken } from '@/lib/auth';
-
-// Helper to authenticate request
-function authenticate(req) {
-  const authHeader = req.headers.get('authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return null;
-  }
-  const token = authHeader.split(' ')[1];
-  return verifyToken(token);
-}
+import { requireSuperAdmin } from '@/lib/auth';
 
 export async function GET(req) {
   try {
-    const user = authenticate(req);
+    const user = requireSuperAdmin(req);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -30,7 +20,7 @@ export async function GET(req) {
 
 export async function PUT(req) {
   try {
-    const user = authenticate(req);
+    const user = requireSuperAdmin(req);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

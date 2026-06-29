@@ -15,12 +15,12 @@ jest.mock('@/lib/db', () => ({
 }));
 
 jest.mock('@/lib/auth', () => ({
-  verifyToken: jest.fn()
+  requireSuperAdmin: jest.fn()
 }));
 
 import { GET } from './route';
 import { query } from '@/lib/db';
-import { verifyToken } from '@/lib/auth';
+import { requireSuperAdmin } from '@/lib/auth';
 
 describe('Staff API - GET', () => {
   it('should return 401 if unauthorized', async () => {
@@ -28,7 +28,7 @@ describe('Staff API - GET', () => {
       headers: { get: () => null }
     };
 
-    verifyToken.mockReturnValue(null);
+    requireSuperAdmin.mockReturnValue(null);
 
     const res = await GET(req);
     expect(res.status).toBe(401);
@@ -39,7 +39,7 @@ describe('Staff API - GET', () => {
       headers: { get: () => 'Bearer fake-token' }
     };
 
-    verifyToken.mockReturnValue({ id: 1, role_id: 1 });
+    requireSuperAdmin.mockReturnValue({ id: 1, role_id: 1 });
 
     query
       .mockResolvedValueOnce({ rows: [{ id: 1, name: 'Admin', role_name: 'Super Admin' }] }) // Staff query
